@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1 Dollar For Your Meme</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0f1a;
+      --panel: #121a2b;
+      --panel-soft: #0f1728;
+      --accent: #22f3b1;
+      --accent-2: #6aa9ff;
+      --warning: #ffb347;
+      --text: #e6eefc;
+      --muted: #98a6c2;
+      --border: #1f2a44;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #14213d 0%, #0b0f1a 45%, #070a12 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 10, 18, 0.75);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .brand-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #071016;
+    }
+
+    .brand h1 {
+      font-size: 22px;
+      letter-spacing: 0.8px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--panel-soft);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      color: #071016;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn.small {
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(34, 243, 177, 0.2);
+    }
+
+    .layout {
+      padding: 36px 48px 60px;
+      display: grid;
+      gap: 32px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: minmax(280px, 1fr) minmax(280px, 420px);
+      align-items: center;
+    }
+
+    .hero-card {
+      background: var(--panel);
+      border-radius: 22px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pay-note {
+      padding: 12px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 179, 71, 0.4);
+      background: rgba(255, 179, 71, 0.08);
+      color: var(--warning);
+      font-size: 14px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--panel-soft);
+      display: grid;
+      gap: 6px;
+    }
+
+    .stat-card h3 {
+      font-size: 24px;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      min-height: 520px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .panel-header h3 {
+      font-size: 20px;
+    }
+
+    .panel-header p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #0c1426;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #0c1426;
+      border: 1px solid var(--border);
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fdfbfb, #ebedee, #9bf6ff);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #071016;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .item-info {
+      display: grid;
+      gap: 4px;
+    }
+
+    .item-info span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .load-more {
+      margin-top: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 12px 48px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .layout {
+        padding: 28px 22px 50px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-badge">$1</div>
+      <div>
+        <h1>1 Dollar For Your Meme</h1>
+        <p class="chip" id="wallet-status">Phantom not connected</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn secondary" id="pay-to-go">Pay to go up</button>
+      <button class="btn" id="connect-wallet">Connect Phantom</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Boost your meme coin for just $5.</h2>
+        <p>
+          Hello! This platform gives you the chance to boost your meme coin for only five dollars.
+          People who are interested in your project will put <strong>$1</strong> into it, helping it grow
+          significantly. After you add funds, your project will be listed on the site.
+        </p>
+        <div class="hero-actions">
+          <button class="btn" id="cta-boost">Add $5 &amp; Boost</button>
+          <button class="btn secondary" id="cta-member">Become a member</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Pay to go up</h3>
+        <p>
+          Pay to go up moves your meme coin to the top of the dashboard. The platform will charge
+          <strong>$5</strong> before the listing goes live.
+        </p>
+        <div class="pay-note">
+          After you add money, your product will be listed and highlighted above the crowd.
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3 id="member-count">21,000</h3>
+            <span>Interested members</span>
+          </div>
+          <div class="stat-card">
+            <h3 id="coin-count">1,000</h3>
+            <span>Listed meme coins</span>
+          </div>
+          <div class="stat-card">
+            <h3>$1</h3>
+            <span>Average community boost</span>
+          </div>
+          <div class="stat-card">
+            <h3>$5</h3>
+            <span>Pay to go up fee</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard">
+      <div class="panel" id="members-panel">
+        <div class="panel-header">
+          <div>
+            <h3>Members interested in your project</h3>
+            <p>21,000 people ready to drop a $1 boost.</p>
+          </div>
+          <button class="btn small secondary" id="become-member">Become a member</button>
+        </div>
+        <div class="input-row" id="member-form" style="display: none;">
+          <input type="text" id="member-name" placeholder="Your name" />
+          <button class="btn small" id="add-member">Join list</button>
+        </div>
+        <div class="list" id="member-list"></div>
+        <div class="load-more">
+          <button class="btn secondary" id="load-more-members">Load more members</button>
+        </div>
+      </div>
+
+      <div class="panel" id="coins-panel">
+        <div class="panel-header">
+          <div>
+            <h3>Listed meme coins</h3>
+            <p>1,000 meme coins listed with pump.fun style defaults.</p>
+          </div>
+          <button class="btn small" id="add-coin">Add meme coin ($5)</button>
+        </div>
+        <div class="input-row" id="coin-form" style="display: none;">
+          <input type="text" id="coin-name" placeholder="Meme coin name" />
+          <button class="btn small" id="submit-coin">Pay $5 &amp; list</button>
+        </div>
+        <div class="list" id="coin-list"></div>
+        <div class="load-more">
+          <button class="btn secondary" id="load-more-coins">Load more coins</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    1 Dollar For Your Meme &mdash; boost the community, grow together.
+  </footer>
+
+  <script>
+    let memberTotal = 21000;
+    let coinTotal = 1000;
+    const memberBatchSize = 120;
+    const coinBatchSize = 80;
+
+    const prefixes = [
+      "Pump", "Hype", "Turbo", "Mega", "Neko", "Luna", "Pixel", "Banana", "Cosmo", "Neon",
+      "Ape", "Rocket", "Fluffy", "Glitch", "Bongo", "Pepe", "Wen", "Moon", "Rug", "Wizard",
+    ];
+    const suffixes = [
+      "Cat", "Dog", "Frog", "Coin", "Token", "Spark", "Wave", "Meme", "Fun", "Run",
+      "Bytes", "Cloud", "Pump", "Bucks", "Crew", "Club", "Labs", "Nova", "Shine", "Boom",
+    ];
+
+    const memberFirst = [
+      "Ava", "Mira", "Dani", "Luca", "Niko", "Zara", "Theo", "Nova", "Maya", "Ivy",
+      "Kai", "Milo", "Sage", "Rhea", "Orin", "Lia", "Vera", "Ezra", "Finn", "Remy",
+    ];
+    const memberLast = [
+      "Pump", "Moon", "Spark", "Meme", "Nova", "Rocket", "Boost", "Cloud", "Glow", "Dash",
+      "Storm", "Blink", "Frost", "Pulse", "Dream", "Flux", "Nova", "Scope", "Drift", "Quirk",
+    ];
+
+    const memberList = document.getElementById("member-list");
+    const coinList = document.getElementById("coin-list");
+    const memberCount = document.getElementById("member-count");
+    const coinCount = document.getElementById("coin-count");
+
+    let loadedMembers = 0;
+    let loadedCoins = 0;
+
+    function randomItem(arr, index) {
+      return arr[index % arr.length];
+    }
+
+    function makeName(index) {
+      const first = randomItem(memberFirst, index);
+      const last = randomItem(memberLast, index + 5);
+      return `${first} ${last}`;
+    }
+
+    function makeCoinName(index) {
+      const prefix = randomItem(prefixes, index);
+      const suffix = randomItem(suffixes, index + 3);
+      return `${prefix} ${suffix}`;
+    }
+
+    function makeLogo(text) {
+      const el = document.createElement("div");
+      el.className = "logo";
+      el.textContent = text.substring(0, 2);
+      return el;
+    }
+
+    function addMemberItem(name, index) {
+      const item = document.createElement("div");
+      item.className = "list-item";
+
+      const logo = makeLogo(name);
+      const info = document.createElement("div");
+      info.className = "item-info";
+      info.innerHTML = `<strong>${name}</strong><span>Interested member #${index + 1}</span>`;
+
+      item.append(logo, info);
+      memberList.appendChild(item);
+    }
+
+    function addCoinItem(name, index) {
+      const item = document.createElement("div");
+      item.className = "list-item";
+
+      const logo = makeLogo(name);
+      const info = document.createElement("div");
+      info.className = "item-info";
+      info.innerHTML = `<strong>${name}</strong><span>Default pump.fun listing #${index + 1}</span>`;
+
+      item.append(logo, info);
+      coinList.appendChild(item);
+    }
+
+    function loadMembers() {
+      const max = Math.min(loadedMembers + memberBatchSize, memberTotal);
+      for (let i = loadedMembers; i < max; i += 1) {
+        addMemberItem(makeName(i), i);
+      }
+      loadedMembers = max;
+    }
+
+    function loadCoins() {
+      const max = Math.min(loadedCoins + coinBatchSize, coinTotal);
+      for (let i = loadedCoins; i < max; i += 1) {
+        addCoinItem(makeCoinName(i), i);
+      }
+      loadedCoins = max;
+    }
+
+    function updateCounts() {
+      memberCount.textContent = memberTotal.toLocaleString();
+      coinCount.textContent = coinTotal.toLocaleString();
+    }
+
+    updateCounts();
+    loadMembers();
+    loadCoins();
+
+    document.getElementById("load-more-members").addEventListener("click", loadMembers);
+    document.getElementById("load-more-coins").addEventListener("click", loadCoins);
+
+    const walletStatus = document.getElementById("wallet-status");
+    document.getElementById("connect-wallet").addEventListener("click", async () => {
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const response = await window.solana.connect();
+          walletStatus.textContent = `Connected: ${response.publicKey.toString().slice(0, 4)}...`;
+        } catch (error) {
+          walletStatus.textContent = "Connection rejected";
+        }
+      } else {
+        walletStatus.textContent = "Phantom not detected (demo mode)";
+      }
+    });
+
+    function toggleForm(formId) {
+      const form = document.getElementById(formId);
+      form.style.display = form.style.display === "none" ? "flex" : "none";
+    }
+
+    document.getElementById("become-member").addEventListener("click", () => toggleForm("member-form"));
+    document.getElementById("cta-member").addEventListener("click", () => toggleForm("member-form"));
+    document.getElementById("add-member").addEventListener("click", () => {
+      const nameInput = document.getElementById("member-name");
+      const name = nameInput.value.trim();
+      if (!name) return;
+
+      memberTotal += 1;
+      addMemberItem(name, memberTotal - 1);
+      memberCount.textContent = memberTotal.toLocaleString();
+      nameInput.value = "";
+    });
+
+    document.getElementById("add-coin").addEventListener("click", () => toggleForm("coin-form"));
+    document.getElementById("cta-boost").addEventListener("click", () => toggleForm("coin-form"));
+    document.getElementById("submit-coin").addEventListener("click", () => {
+      const nameInput = document.getElementById("coin-name");
+      const name = nameInput.value.trim();
+      if (!name) return;
+
+      coinTotal += 1;
+      addCoinItem(name, coinTotal - 1);
+      coinCount.textContent = coinTotal.toLocaleString();
+      nameInput.value = "";
+    });
+
+    document.getElementById("pay-to-go").addEventListener("click", () => {
+      alert("Pay to go up: You will be charged $5. After you add money, your product will be listed at the top.");
+    });
+  </script>
+</body>
+</html>
